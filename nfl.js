@@ -15,7 +15,6 @@ return 0;
 
 function getNFLCurrent() {
 	getCurrentWeek().then(function(week) {
-		week = week + 1;
 		console.log('week: ' + week);
 		getNFLJSON(week).then(function(results) {
 			var games = results.ss.gms[0].g;
@@ -68,13 +67,14 @@ function getNFLTeam(team) {
 			var display = 'Week ' + x + ':';
 			if (schedule[x]) {
 				display += schedule[x].team1
-				//display += '(' + ((schedule[x].home) ? 'h' : 'a') + ')'
+				if (schedule[x].score2 < schedule[x].score1) display += "*"
 				if (schedule[x].score1 != '') {
 					display += '(' + schedule[x].score1 + ')';
 				} else {
 					display += '   ';
 				}
 				display += '\t vs\t ' + schedule[x].team2;
+				if (schedule[x].score2 > schedule[x].score1) display += "*"
 				if (schedule[x].score2 != '') {
 					display += '(' + schedule[x].score2 + ')';
 				} else {
